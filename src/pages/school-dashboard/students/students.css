@@ -1,0 +1,22 @@
+.table_item_bx {
+  max-width: 200px;
+  text-align: center;
+  font-size: 0.85rem;
+  margin: 6px 0;
+  display: inline-flex;
+  border-radius: 5px;
+  padding: 4px 15px;
+}
+.student_card {
+  border-radius: 5px;
+  padding: 20px 20px 30px;
+}
+.password_icon{
+  filter: brightness(0) saturate(100%) invert(23%) sepia(14%) saturate(0%) hue-rotate(239deg) brightness(95%) contrast(109%);
+}
+.student_files .download_file_form{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.student_files .upload_file_form{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}

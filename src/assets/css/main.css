@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+:root {
+  --main-color: #9a7ed9;
+
+  scrollbar-face-color: #c9c3c3;
+  scrollbar-track-color: rgb(46, 54, 69);
+  scrollbar-color: #f4f7f7;
+  scrollbar-width: thin;
+  --animate-delay: 1.9s;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: #f4f7f7;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background-color: #c9c3c3;
+}
+
+.animate__animated {
+  --animate-duration: 1.5s;
+}
+
+body {
+  font-family: "Poppins", "Cairo";
+  overflow-x: hidden;
+}
+
+.remove_upload_icon {
+  display: none;
+}
+.menu_arrow {
+  filter: brightness(0) saturate(100%) invert(12%) sepia(52%) saturate(3975%)
+    hue-rotate(251deg) brightness(95%) contrast(95%);
+}
+input[type=file] {
+  white-space: normal;
+  word-break: break-word;
+  width: 100%;
+  font-size: 15px;
+}
+.light_btn{
+  color: #523397;
+  border: 1px solid #523397;
+  background-color: #fff;
+}
+.light_btn:hover{
+  color: #fff;
+  background-color: #523397;
+}
+.box_shadow{
+  box-shadow: 0px 0px 4px 0px #00000040;
+}
