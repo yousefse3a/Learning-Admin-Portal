@@ -23,6 +23,7 @@ import EditModelExamPage from "./pages/dashboard/questions/edit-model-exam-page"
 // school admin pages
 import { SchoolDashboardLayout } from "./pages/school-dashboard";
 import { SchoolStudents } from "./pages/school-dashboard/students/student";
+import StudentsExams from "./pages/school-dashboard/exams/students-exams";
 import SchoolLogin from "./pages/school-dashboard/auth/school-login";
 
 //toastify
@@ -70,6 +71,7 @@ const App = () => {
 
         <Route element={<SchoolDashboardLayout />}>
           <Route path="/school/school-students" element={<SchoolStudents />} />
+          <Route path="/school/students-exams" element={<StudentsExams />} />
         </Route>
         <Route path="/school/school-login" element={<SchoolLogin />} />
       </Routes>

@@ -1,0 +1,11 @@
+#student_subject_select{}
+#student_subject_select .select__control{
+    background-color: #7a55cd;
+}
+#student_subject_select .select__placeholder{
+    color: #fff;
+}
+#student_subject_select .select__single-value,
+#student_subject_select .select__input-container{
+    color: #fff;
+}

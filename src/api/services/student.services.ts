@@ -16,3 +16,16 @@ export const AddStudent = (data) =>
 // Update Student
 export const UpdateStudent = (data) =>
   apiInstance.put(`/Account/EditStudent`, data);
+
+// All Students Exams
+export const GetStudentsExams = (payload = {}) =>
+  apiInstance.post(`/Student/GetByGroupStudent`, payload);
+// Students Exams subjects
+export const GetStudentsExamsSubjects = () =>
+  apiInstance.get(`/Student/GetBySubject`);
+// Students Exams AcademicYear
+export const GetAcademicYear = () =>
+  apiInstance.get(`/Student/GetAcademicYear`);
+// Students Exams List
+export const GetStudentsExamsList = (payload = {}) =>
+  apiInstance.post(`/Student/ListExam`, payload);

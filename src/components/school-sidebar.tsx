@@ -13,18 +13,8 @@ interface SidebarProps {
 }
 
 const tabRoutes: { [key: string]: string } = {
-  "/dashboard/users": "addAdmin",
-  "/dashboard/school-admins": "schoolAdmin",
-  "/dashboard/students": "studentUsers",
-  "/dashboard/students/download": "studentUsersDownload",
-  "/dashboard/add-file-student": "addFileStudent",
-  "/dashboard/schools": "schools",
-  "/dashboard/grades": "grades",
-  "/dashboard/levels": "levels",
-  "/dashboard/subjects": "subjects",
-  "/dashboard/questions": "questions",
-  "/dashboard/exams": "exams",
-  "/dashboard/Add-model-exam": "AddModelExam",
+  "/school/school-students": "schoolStudents",
+  "/school/students-exams": "studentsExams",
 };
 
 function SchoolSidebar({ isOpen, toggleSidebar }: SidebarProps) {
@@ -33,7 +23,7 @@ function SchoolSidebar({ isOpen, toggleSidebar }: SidebarProps) {
 
   // Determine the active tab based on the current path
   const activeTab =
-    tabRoutes[location.pathname as keyof typeof tabRoutes] || "addAdmin";
+    tabRoutes[location.pathname as keyof typeof tabRoutes] || "schoolStudents";
 
   const handleTabClick = (route: string) => {
     navigate(route);
@@ -49,13 +39,24 @@ function SchoolSidebar({ isOpen, toggleSidebar }: SidebarProps) {
 
       <button
         className={`text-left p-2 text-white text-[0.95rem] font-medium rounded-lg ${
-          activeTab === "addAdmin"
+          activeTab === "schoolStudents"
             ? "bg-[#523397] text-white"
             : "hover:bg-[#3d217b] text-gray-400"
         }`}
         onClick={() => handleTabClick("/school/school-students")}
       >
         Students
+      </button>
+
+      <button
+        className={`text-left p-2 text-white text-[0.95rem] font-medium rounded-lg ${
+          activeTab === "studentsExams"
+            ? "bg-[#523397] text-white"
+            : "hover:bg-[#3d217b] text-gray-400"
+        }`}
+        onClick={() => handleTabClick("/school/students-exams")}
+      >
+        Exams
       </button>
 
       {/* <button

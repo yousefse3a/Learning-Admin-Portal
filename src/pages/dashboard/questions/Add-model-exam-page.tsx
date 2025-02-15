@@ -11,6 +11,7 @@ import MainForm from "./main-form";
 import QuestionsSection from "./questions-section";
 import { Topic } from "./types";
 import { toast } from "react-toastify";
+import { boolean } from "zod";
 
 const AddModelExamPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -110,6 +111,8 @@ const AddModelExamPage: React.FC = () => {
               question.Score
             );
             const quesitonAnswers = question.Answers;
+            console.log("quesitonAnswers", quesitonAnswers);
+
             if (Array.isArray(quesitonAnswers) && quesitonAnswers.length > 0) {
               quesitonAnswers.map((answer, index) => {
                 formData.append(
@@ -118,13 +121,20 @@ const AddModelExamPage: React.FC = () => {
                 );
                 formData.append(
                   `Topics[${tIndex}].Questions[${qIndex}].Answers[${index}].IsCorrect`,
-                  answer.IsCorrect
+
+                  typeof answer.IsCorrect === "boolean"
+                    ? answer.IsCorrect
+                    : false
+                );
+                formData.append(
+                  `Topics[${tIndex}].Questions[${qIndex}].Answers[${index}].CorrectAnswerOrder`,
+                  typeof answer.IsCorrect === "boolean" ? "" : answer.IsCorrect
                 );
               });
             }
           });
         }
-      }); 
+      });
     }
     return formData;
   };
