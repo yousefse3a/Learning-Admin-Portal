@@ -194,212 +194,222 @@ const QuestionsSection: React.FC<{
               </div>
             ))}
           </div>
-          {topic?.Questions.map((question: any, qIndex: number) => (
-            <div key={qIndex} className="border p-4 my-6 rounded-lg">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="font-semibold">Question {qIndex + 1}</h2>
-                <Button
-                  onClick={() => handleQuestionRemove(tIndex, qIndex)}
-                  className="bg-red-500"
-                >
-                  Remove
-                </Button>
-              </div>
-              <div className="grid grid-cols-6 gap-4">
-                {questionFieldConfig.map((field) => {
-                  if (
-                    field.type === "file" &&
-                    (question.QuestionType === EQuestionType.MCQ ||
-                      question.QuestionType === EQuestionType.Drag ||
-                      question.QuestionType === EQuestionType.Matching ||
-                      question.QuestionType === EQuestionType.Complete)
-                  ) {
-                    return null; // Skip rendering the file input for MCQ questions
-                  }
-                  return (
-                    <div key={field.name} className="col-span-6 md:col-span-3">
-                      <label className="block text-sm font-medium mb-2">
-                        {field.label}
-                      </label>
-                      {field.type === "select" ? (
-                        <select
-                          value={question[field.name]}
-                          onChange={(e) =>
-                            handleQuestionChange(
-                              tIndex,
-                              qIndex,
-                              field.name,
-                              Number(e.target.value)
-                            )
-                          }
-                          className="w-full p-2 border rounded"
-                        >
-                          <option value="">Select {field.label}</option>
-                          {field.options?.map((option) => (
-                            <option key={option.id} value={option.id}>
-                              {option.name}
-                            </option>
-                          ))}
-                        </select>
-                      ) : field.type === "checkbox" ? (
-                        <input
-                          type="checkbox"
-                          checked={question[field.name]}
-                          onChange={(e) =>
-                            handleQuestionChange(
-                              tIndex,
-                              qIndex,
-                              field.name,
-                              e.target.checked
-                            )
-                          }
-                        />
-                      ) : field.type === "file" ? (
-                        <input
-                          type="file"
-                          onChange={(e) =>
-                            handleQuestionChange(
-                              tIndex,
-                              qIndex,
-                              field.name,
-                              e.target.files?.[0] || ""
-                            )
-                          }
-                        />
-                      ) : (
-                        <Input
-                          type={field.type}
-                          placeholder={field.placeholder}
-                          value={question[field.name]}
-                          onChange={(e) =>
-                            handleQuestionChange(
-                              tIndex,
-                              qIndex,
-                              field.name,
-                              e.target.value
-                            )
-                          }
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+          {topic?.Questions.map((question: any, qIndex: number) => {
+            return (
+              <div key={qIndex} className="border p-4 my-6 rounded-lg">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="font-semibold">Question {qIndex + 1}</h2>
+                  <Button
+                    onClick={() => handleQuestionRemove(tIndex, qIndex)}
+                    className="bg-red-500"
+                  >
+                    Remove
+                  </Button>
+                </div>
+                <div className="grid grid-cols-6 gap-4">
+                  {questionFieldConfig.map((field) => {
+                    if (
+                      field.type === "file" &&
+                      (question.QuestionType === EQuestionType.MCQ ||
+                        question.QuestionType === EQuestionType.Drag ||
+                        question.QuestionType === EQuestionType.Matching ||
+                        question.QuestionType === EQuestionType.Complete)
+                    ) {
+                      return null; // Skip rendering the file input for MCQ questions
+                    }
+                    return (
+                      <div
+                        key={field.name}
+                        className="col-span-6 md:col-span-3"
+                      >
+                        <label className="block text-sm font-medium mb-2">
+                          {field.label}
+                        </label>
+                        {field.type === "select" ? (
+                          <select
+                            value={question[field.name]}
+                            onChange={(e) => {
+                              localStorage?.setItem(
+                                "QuestionType",
+                                e.target.value
+                              );
 
-              {/* Answers Section */}
-              <div className="mt-6">
-                {!question.QuestionType ||
-                  (question.QuestionType !== EQuestionType.Writing && (
-                    <>
-                      <h3 className="font-medium mb-4">Answers</h3>
-                      {question.Answers.map((answer: any, aIndex: number) => (
-                        <div
-                          key={aIndex}
-                          className="border p-2 mb-4 rounded-lg"
-                        >
-                          <div className="grid grid-cols-6 gap-4">
-                            {answerFieldConfig.map((field) => (
-                              <div
-                                key={field.name}
-                                className="col-span-6 md:col-span-3"
-                              >
-                                <label className="block text-sm font-medium mb-1">
-                                  {field.label}
-                                </label>
-                                {field.type === "checkbox" &&
-                                !(
-                                  // Hide checkbox for MCQ, Drag, Matching, Complete
-                                  (
-                                    question.QuestionType ===
+                              handleQuestionChange(
+                                tIndex,
+                                qIndex,
+                                field.name,
+                                Number(e.target.value)
+                              );
+                            }}
+                            className="w-full p-2 border rounded"
+                          >
+                            <option value="">Select {field.label}</option>
+                            {field.options?.map((option) => (
+                              <option key={option.id} value={option.id}>
+                                {option.name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : field.type === "checkbox" ? (
+                          <input
+                            type="checkbox"
+                            checked={question[field.name]}
+                            onChange={(e) =>
+                              handleQuestionChange(
+                                tIndex,
+                                qIndex,
+                                field.name,
+                                e.target.checked
+                              )
+                            }
+                          />
+                        ) : field.type === "file" ? (
+                          <input
+                            type="file"
+                            onChange={(e) =>
+                              handleQuestionChange(
+                                tIndex,
+                                qIndex,
+                                field.name,
+                                e.target.files?.[0] || ""
+                              )
+                            }
+                          />
+                        ) : (
+                          <Input
+                            type={field.type}
+                            placeholder={field.placeholder}
+                            value={question[field.name]}
+                            onChange={(e) =>
+                              handleQuestionChange(
+                                tIndex,
+                                qIndex,
+                                field.name,
+                                e.target.value
+                              )
+                            }
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Answers Section */}
+                <div className="mt-6">
+                  {!question.QuestionType ||
+                    (question.QuestionType !== EQuestionType.Writing && (
+                      <>
+                        <h3 className="font-medium mb-4">Answers</h3>
+                        {question.Answers.map((answer: any, aIndex: number) => (
+                          <div
+                            key={aIndex}
+                            className="border p-2 mb-4 rounded-lg"
+                          >
+                            <div className="grid grid-cols-6 gap-4">
+                              {answerFieldConfig.map((field) => (
+                                <div
+                                  key={field.name}
+                                  className="col-span-6 md:col-span-3"
+                                >
+                                  <label className="block text-sm font-medium mb-1">
+                                    {field.label}
+                                  </label>
+                                  {field.type === "checkbox" &&
+                                  !(
+                                    // Hide checkbox for MCQ, Drag, Matching, Complete
+                                    (
+                                      question.QuestionType ===
+                                        EQuestionType.MCQ ||
+                                      question.QuestionType ===
+                                        EQuestionType.Drag ||
+                                      question.QuestionType ===
+                                        EQuestionType.Matching ||
+                                      question.QuestionType ===
+                                        EQuestionType.Complete
+                                    )
+                                  ) ? (
+                                    <input
+                                      type="checkbox"
+                                      checked={answer[field.name]}
+                                      onChange={(e) =>
+                                        handleAnswerChange(
+                                          tIndex,
+                                          qIndex,
+                                          aIndex,
+                                          field.name,
+                                          e.target.checked
+                                        )
+                                      }
+                                    />
+                                  ) : question.QuestionType ===
                                       EQuestionType.MCQ ||
                                     question.QuestionType ===
                                       EQuestionType.Drag ||
                                     question.QuestionType ===
                                       EQuestionType.Matching ||
                                     question.QuestionType ===
-                                      EQuestionType.Complete
-                                  )
-                                ) ? (
-                                  <input
-                                    type="checkbox"
-                                    checked={answer[field.name]}
-                                    onChange={(e) =>
-                                      handleAnswerChange(
-                                        tIndex,
-                                        qIndex,
-                                        aIndex,
-                                        field.name,
-                                        e.target.checked
-                                      )
-                                    }
-                                  />
-                                ) : question.QuestionType ===
-                                    EQuestionType.MCQ ||
-                                  question.QuestionType ===
-                                    EQuestionType.Drag ||
-                                  question.QuestionType ===
-                                    EQuestionType.Matching ||
-                                  question.QuestionType ===
-                                    EQuestionType.Complete ? (
-                                  <Input
-                                    type="number"
-                                    value={answer[field.name]}
-                                    onChange={(e) =>
-                                      handleAnswerChange(
-                                        tIndex,
-                                        qIndex,
-                                        aIndex,
-                                        field.name,
-                                        e.target.value
-                                      )
-                                    }
-                                    placeholder="Enter a number"
-                                  />
-                                ) : field.type === "file" ? (
-                                  <input
-                                    type="file"
-                                    onChange={(e) =>
-                                      handleAnswerChange(
-                                        tIndex,
-                                        qIndex,
-                                        aIndex,
-                                        field.name,
-                                        e.target.files?.[0] || ""
-                                      )
-                                    }
-                                  />
-                                ) : (
-                                  <Input
-                                    type={field.type}
-                                    placeholder={field.placeholder}
-                                    value={answer[field.name]}
-                                    onChange={(e) =>
-                                      handleAnswerChange(
-                                        tIndex,
-                                        qIndex,
-                                        aIndex,
-                                        field.name,
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                )}
-                              </div>
-                            ))}
+                                      EQuestionType.Complete ? (
+                                    <Input
+                                      type="number"
+                                      value={answer[field.name]}
+                                      onChange={(e) =>
+                                        handleAnswerChange(
+                                          tIndex,
+                                          qIndex,
+                                          aIndex,
+                                          field.name,
+                                          e.target.value
+                                        )
+                                      }
+                                      placeholder="Enter a number"
+                                    />
+                                  ) : field.type === "file" ? (
+                                    <input
+                                      type="file"
+                                      onChange={(e) =>
+                                        handleAnswerChange(
+                                          tIndex,
+                                          qIndex,
+                                          aIndex,
+                                          field.name,
+                                          e.target.files?.[0] || ""
+                                        )
+                                      }
+                                    />
+                                  ) : (
+                                    <Input
+                                      type={field.type}
+                                      placeholder={field.placeholder}
+                                      value={answer[field.name]}
+                                      onChange={(e) =>
+                                        handleAnswerChange(
+                                          tIndex,
+                                          qIndex,
+                                          aIndex,
+                                          field.name,
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                      <Button
-                        onClick={() => handleAddAnswer(tIndex, qIndex)}
-                        className="bg-purple-500 mt-2"
-                      >
-                        Add Answer
-                      </Button>
-                    </>
-                  ))}
+                        ))}
+                        <Button
+                          onClick={() => handleAddAnswer(tIndex, qIndex)}
+                          className="bg-purple-500 mt-2"
+                        >
+                          Add Answer
+                        </Button>
+                      </>
+                    ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
           <Button
             onClick={() => handleAddQuestion(tIndex)}
             className="bg-green-500 mt-4"
