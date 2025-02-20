@@ -69,11 +69,11 @@ const App = () => {
           <Route path="/dashboard/exams" element={<ExamTable />} />
         </Route>
 
-        <Route element={<SchoolDashboardLayout />}>
+        {/* <Route element={<SchoolDashboardLayout />}>
           <Route path="/school/school-students" element={<SchoolStudents />} />
           <Route path="/school/students-exams" element={<StudentsExams />} />
         </Route>
-        <Route path="/school/school-login" element={<SchoolLogin />} />
+        <Route path="/school/school-login" element={<SchoolLogin />} /> */}
       </Routes>
 
       <ToastContainer />
