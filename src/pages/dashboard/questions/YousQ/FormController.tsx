@@ -1,6 +1,7 @@
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { ExamData } from "./AddExamTypes";
 import { useState } from "react";
+import { getNestedValue } from "@/lib/utils";
 
 interface FormControllerProps {
   label: string;
@@ -11,6 +12,7 @@ interface FormControllerProps {
   type: "text" | "select" | "checkbox" | "number" | "file";
   options?: { value: string; label: string }[];
   isLoading?: boolean;
+  className?: string;
 }
 
 function FormController({
@@ -22,24 +24,16 @@ function FormController({
   type,
   options,
   isLoading,
+  className,
 }: FormControllerProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
 
-  function getNestedValue(obj: Record<string, any>, path: string) {
-    return path.split(".").reduce((current, key) => {
-      if (Array.isArray(current) && !isNaN(Number(key))) {
-        return current[Number(key)];
-      } else if (current && typeof current === "object" && key in current) {
-        return current[key];
-      }
-      return undefined;
-    }, obj);
-  }
+
 
   const errorMess = getNestedValue(errors, name);
   return (
-    <div className="mb-4">
+    <div className={`${className} mb-4`}>
       <label className="block text-sm font-medium mb-1">{label}</label>
       <Controller
         name={name}

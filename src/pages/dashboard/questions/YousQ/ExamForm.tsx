@@ -2,7 +2,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useForm } from "react-hook-form";
 import { ExamData } from "./AddExamTypes";
 import GeneralInfo from "./GeneralInfo";
-import TopicComponent from "./TopicComponent";
+import Topics from "./Topics";
 import examSchema from "./ValidationSchema";
 
 function ExamForm() {
@@ -10,6 +10,7 @@ function ExamForm() {
     control,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm<ExamData>({
     resolver: joiResolver(examSchema),
     defaultValues: {
@@ -38,7 +39,7 @@ function ExamForm() {
         <GeneralInfo control={control} errors={errors} />
 
         {/* Topics Section (Now handled inside TopicComponent) */}
-        <TopicComponent control={control} errors={errors} />
+        <Topics control={control} errors={errors} clearErrors={clearErrors} />
 
         <button
           type="submit"
