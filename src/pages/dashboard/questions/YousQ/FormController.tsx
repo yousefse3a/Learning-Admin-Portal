@@ -25,6 +25,19 @@ function FormController({
 }: FormControllerProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
+
+  function getNestedValue(obj: Record<string, any>, path: string) {
+    return path.split(".").reduce((current, key) => {
+      if (Array.isArray(current) && !isNaN(Number(key))) {
+        return current[Number(key)];
+      } else if (current && typeof current === "object" && key in current) {
+        return current[key];
+      }
+      return undefined;
+    }, obj);
+  }
+
+  const errorMess = getNestedValue(errors, name);
   return (
     <div className="mb-4">
       <label className="block text-sm font-medium mb-1">{label}</label>
@@ -39,14 +52,14 @@ function FormController({
                 <input
                   {...field}
                   type={type}
-                  className="border p-2 w-full"
+                  className="border rounded p-2 w-full"
                   placeholder={placeholder}
                 />
               );
             case "select":
               return (
                 <div className="relative">
-                  <select {...field} className="border p-2 w-full">
+                  <select {...field} className="border rounded p-2 w-full">
                     <option value="">{placeholder}</option>
                     {isLoading ? (
                       <option disabled>Loading...</option>
@@ -106,10 +119,10 @@ function FormController({
                       <img
                         src={preview}
                         alt="Preview"
-                        className="w-32 h-32 object-cover rounded-md border"
+                        className="w-32 h-32 object-cover rounded border "
                       />
                     ) : (
-                      <div className="w-32 h-32 flex items-center justify-center border rounded-md bg-gray-100 text-gray-500">
+                      <div className="w-32 h-32 flex items-center justify-center border  rounded bg-gray-100 text-gray-500">
                         Click to Upload
                       </div>
                     )}
@@ -124,7 +137,7 @@ function FormController({
           }
         }}
       />
-      {errors[name] && <p className="text-red-500">{errors[name]?.message}</p>}
+      {errorMess && <p className="text-red-500">{errorMess?.message}</p>}
     </div>
   );
 }

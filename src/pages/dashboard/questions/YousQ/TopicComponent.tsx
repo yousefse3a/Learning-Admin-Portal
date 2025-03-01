@@ -1,100 +1,113 @@
+import { useState } from "react";
 import { Control, FieldErrors, useFieldArray } from "react-hook-form";
 import FormController from "./FormController";
-import QuestionComponent from "./QuestionComponent";
 import { ExamData } from "./AddExamTypes";
 import { Button } from "@/components/ui/button";
+import QuestionComponent from "./QuestionComponent";
 
 interface TopicProps {
-  index: number;
   control: Control<ExamData>;
-  removeTopic: (index: number) => void;
   errors: FieldErrors<ExamData>;
 }
 
-function TopicComponent({ index, control, removeTopic, errors }: TopicProps) {
+function TopicComponent({ control, errors }: TopicProps) {
   const {
-    fields: questions,
-    append: addQuestion,
-    remove: removeQuestion,
+    fields: topics,
+    append: addTopic,
+    remove: removeTopic,
   } = useFieldArray({
     control,
-    name: `topics.${index}.questions`,
+    name: "topics",
   });
 
   return (
-    <div key={index} className="border p-4 mb-6 rounded-lg">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="font-semibold">Topic {index + 1}</h2>
-        <Button
-          type="button"
-          onClick={() => removeTopic(index)}
-          className="bg-red-500"
-        >
-          Remove Topic
-        </Button>
-      </div>
-      <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-6 md:col-span-3">
-          <FormController
-            label="Title (Ar)"
-            name={`topics.${index}.title_ar`}
-            control={control}
-            placeholder="Topic Title Arabic"
-            errors={errors} // Ensure error message is correctly passed
-            type="text"
-          />
-        </div>
-        <div className="col-span-6 md:col-span-3">
-          <FormController
-            label="Topic (En)"
-            name={`topics.${index}.title_en`}
-            control={control}
-            placeholder="Topic Title English"
-            errors={errors}
-            type="text"
-          />{" "}
-        </div>
-        <div className="col-span-6 md:col-span-3">
-          <FormController
-            label="Topic Content"
-            name={`topics.${index}.content`}
-            control={control}
-            placeholder="Topic Content"
-            errors={errors}
-            type="text"
-          />
-        </div>
-        <div className="col-span-6 md:col-span-3">
-          <FormController
-            label="Upload Topic Image"
-            name="file"
-            control={control}
-            type="file"
-            errors={errors}
-          />
-        </div>
-      </div>
+    <div className="mt-6">
+      <h2 className="text-xl font-semibold mb-4">Topics</h2>
 
-      {/* Questions Section */}
-      <h4 className="font-semibold mt-4">Questions</h4>
-      <button
+      {topics.map((topic, index) => (
+        <div key={topic.id} className="border p-4 mb-6 rounded-lg">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="font-semibold">Topic {index + 1}</h2>
+            <Button
+              type="button"
+              onClick={() => removeTopic(index)}
+              className="bg-red-500"
+            >
+              Remove Topic
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-6 gap-4">
+            <div className="col-span-6 md:col-span-3">
+              <FormController
+                label="Title (Ar)"
+                name={`topics.${index}.title_ar`}
+                control={control}
+                placeholder="Topic Title Arabic"
+                errors={errors}
+                type="text"
+              />
+            </div>
+            <div className="col-span-6 md:col-span-3">
+              <FormController
+                label="Title (En)"
+                name={`topics.${index}.title_en`}
+                control={control}
+                placeholder="Topic Title English"
+                errors={errors}
+                type="text"
+              />
+            </div>
+            <div className="col-span-6 md:col-span-3">
+              <FormController
+                label="Topic Content"
+                name={`topics.${index}.content`}
+                control={control}
+                placeholder="Topic Content"
+                errors={errors}
+                type="text"
+              />
+            </div>
+            {/* File Upload with Preview */}
+            <div className="col-span-6 md:col-span-3">
+              <label className="block text-sm font-medium mb-1">
+                Upload Topic Image
+              </label>
+              <FormController
+                label=""
+                name={`topics.${index}.file`}
+                control={control}
+                errors={errors}
+                type="file"
+              />
+            </div>
+          </div>
+          {/* Question Component (Handles Loop for Questions) */}
+          <div className="col-span-6">
+            <QuestionComponent
+              topicIndex={index}
+              control={control}
+              errors={errors}
+            />
+          </div>
+        </div>
+      ))}
+
+      {/* Add Topic Button */}
+      <Button
         type="button"
-        onClick={() => addQuestion({ text: "" })}
-        className="mt-2 text-blue-500"
+        onClick={() =>
+          addTopic({
+            title_ar: "",
+            title_en: "",
+            content: "",
+            questions: [{ text: "" }],
+          })
+        }
+        className="bg-green-500 mt-4"
       >
-        Add Question
-      </button>
-
-      {/* {questions.map((question, qIndex) => (
-        <QuestionComponent
-          key={question.id}
-          index={qIndex}
-          topicIndex={index}
-          control={control}
-          removeQuestion={removeQuestion}
-          errors={errors}
-        />
-      ))} */}
+        Add Topic
+      </Button>
     </div>
   );
 }
