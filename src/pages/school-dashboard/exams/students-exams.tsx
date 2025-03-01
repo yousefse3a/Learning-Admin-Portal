@@ -75,7 +75,11 @@ export default function StudentsExams() {
   };
 
   useEffect(() => {
-    fetchExams();
+    if (selectedSubject && selectedAcademicYear) {
+      fetchExams();
+    } else {
+      setExamsList([]); // Clear the table when no filters are selected
+    }
   }, [
     page,
     searchKeyword,

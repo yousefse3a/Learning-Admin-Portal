@@ -29,6 +29,7 @@ import SchoolLogin from "./pages/school-dashboard/auth/school-login";
 //toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ExamForm from "./pages/dashboard/questions/YousQ/ExamForm";
 
 const App = () => {
   return (
@@ -60,6 +61,11 @@ const App = () => {
           <Route path="/dashboard/questions" element={<ModelExamTable />} />
           <Route
             path="/dashboard/Add-model-exam"
+            element={<ExamForm />}
+            // element={<AddModelExamPage />}
+          />
+          <Route
+            path="/dashboard/Add-model-exam2"
             element={<AddModelExamPage />}
           />
           <Route

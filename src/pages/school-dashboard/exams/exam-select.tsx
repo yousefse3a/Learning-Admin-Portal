@@ -10,6 +10,19 @@ const StudentExamSelect = ({ name, defaultValue, onChange }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
 
   // Fetch subjects
+  // const fetchSubjects = async () => {
+  //   try {
+  //     const payload = {
+  //       Keyword: searchKeyword,
+  //       Page: page,
+  //       Size: pageSize,
+  //     };
+  //     const response = await GetStudentsExamsList(payload);
+  //     setSubjects(response?.data?.Data || []);
+  //   } catch (error) {
+  //     console.error("Error fetching subjects:", error);
+  //   }
+  // };
   const fetchSubjects = async () => {
     try {
       const payload = {
@@ -18,7 +31,11 @@ const StudentExamSelect = ({ name, defaultValue, onChange }) => {
         Size: pageSize,
       };
       const response = await GetStudentsExamsList(payload);
-      setSubjects(response?.data?.Data || []);
+      console.log("API Response:", response); // Debugging log
+      console.log("Extracted Data:", response?.data?.Data); // Debugging log
+      setSubjects(
+        Array.isArray(response?.data?.Data) ? response.data.Data : []
+      );
     } catch (error) {
       console.error("Error fetching subjects:", error);
     }
@@ -29,7 +46,7 @@ const StudentExamSelect = ({ name, defaultValue, onChange }) => {
   }, []);
 
   // Map subjects to react-select options
-  const gradeOptions = subjects.map((subject) => ({
+  const gradeOptions = subjects?.map((subject) => ({
     label: subject?.NameEn,
     value: subject?.Id,
   }));
