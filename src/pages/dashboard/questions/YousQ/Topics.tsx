@@ -9,14 +9,14 @@ interface TopicsProps {
   errors: FieldErrors<ExamData>;
 }
 
-function Topics({ control, errors,clearErrors }: TopicsProps) {
+function Topics({ control, errors }: TopicsProps) {
   const {
     fields: topics,
     append: addTopic,
     remove: removeTopic,
   } = useFieldArray({
     control,
-    name: "topics",
+    name: "Topics",
   });
 
   return (
@@ -41,7 +41,7 @@ function Topics({ control, errors,clearErrors }: TopicsProps) {
           <div className="grid grid-cols-6 gap-4">
             <FormController
               label="Title (Ar)"
-              name={`topics.${index}.title_ar`}
+              name={`Topics.${index}.title_ar`}
               control={control}
               placeholder="Topic Title Arabic"
               errors={errors}
@@ -51,7 +51,7 @@ function Topics({ control, errors,clearErrors }: TopicsProps) {
 
             <FormController
               label="Title (En)"
-              name={`topics.${index}.title_en`}
+              name={`Topics.${index}.title_en`}
               control={control}
               placeholder="Topic Title English"
               errors={errors}
@@ -61,7 +61,7 @@ function Topics({ control, errors,clearErrors }: TopicsProps) {
 
             <FormController
               label="Topic Content"
-              name={`topics.${index}.content`}
+              name={`Topics.${index}.content`}
               control={control}
               placeholder="Topic Content"
               errors={errors}
@@ -72,7 +72,7 @@ function Topics({ control, errors,clearErrors }: TopicsProps) {
 
             <FormController
               label="Upload Topic Image"
-              name={`topics.${index}.file`}
+              name={`Topics.${index}.file`}
               control={control}
               errors={errors}
               type="file"
@@ -81,7 +81,7 @@ function Topics({ control, errors,clearErrors }: TopicsProps) {
           </div>
           {/* Question Component (Handles Loop for Questions) */}
           <div className="col-span-6">
-            <Questions topicIndex={index} control={control} errors={errors}  clearErrors={clearErrors}/>
+            <Questions topicIndex={index} control={control} errors={errors} />
           </div>
         </div>
       ))}

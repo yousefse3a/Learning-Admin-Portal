@@ -1,9 +1,11 @@
-import { Control, useWatch, FieldErrors } from "react-hook-form";
+import { Control, FieldErrors, useWatch } from "react-hook-form";
 import { ExamData } from "./AddExamTypes";
-import FormController from "./FormController";
-import MCQtype from "./MCQtype";
-import TrueFalseType from "./TrueFalsetype";
-import { useEffect } from "react";
+import DragDropType from "./QuestionsTypes/DragDropType";
+import MatchingType from "./QuestionsTypes/MatchingType";
+import MCQtype from "./QuestionsTypes/MCQtype";
+import TrueFalseType from "./QuestionsTypes/TrueFalseType";
+import WritingType from "./QuestionsTypes/WritingType";
+import CompleteType from "./QuestionsTypes/CompleteType";
 
 interface QuestionRendererProps {
   topicIndex: number;
@@ -17,20 +19,15 @@ export default function QuestionRenderer({
   questionIndex,
   control,
   errors,
-  clearErrors,
 }: QuestionRendererProps) {
   // Watch the selected type for the question
   const selectedType = useWatch({
     control,
-    name: `topics.${topicIndex}.questions.${questionIndex}.type`,
+    name: `Topics.${topicIndex}.questions.${questionIndex}.QuestionType`,
   });
-  // useEffect(() => {
-  //   clearErrors();
-  // }, [selectedType]);
 
   return (
     <div className="mt-4">
-      {/* Render Based on Question Type */}
       {selectedType === "1" && (
         <MCQtype
           topicIndex={topicIndex}
@@ -39,7 +36,38 @@ export default function QuestionRenderer({
           errors={errors}
         />
       )}
-      {/* Render TrueFalseInput if Type is True/False */}
+      {selectedType === "2" && (
+        <WritingType
+          topicIndex={topicIndex}
+          questionIndex={questionIndex}
+          control={control}
+          errors={errors}
+        />
+      )}
+      {selectedType === "3" && (
+        <MatchingType
+          topicIndex={topicIndex}
+          questionIndex={questionIndex}
+          control={control}
+          errors={errors}
+        />
+      )}
+      {selectedType === "4" && (
+        <DragDropType
+          topicIndex={topicIndex}
+          questionIndex={questionIndex}
+          control={control}
+          errors={errors}
+        />
+      )}
+      {selectedType === "5" && (
+        <CompleteType
+          topicIndex={topicIndex}
+          questionIndex={questionIndex}
+          control={control}
+          errors={errors}
+        />
+      )}
       {selectedType === "6" && (
         <TrueFalseType
           topicIndex={topicIndex}

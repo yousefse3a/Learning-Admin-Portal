@@ -1,8 +1,8 @@
+import { EQuestionType } from "@/api/adminApis";
+import { Button } from "@/components/ui/button";
 import { Control, FieldErrors, useFieldArray } from "react-hook-form";
 import { ExamData } from "./AddExamTypes";
-import { Button } from "@/components/ui/button";
 import FormController from "./FormController";
-import { EQuestionType } from "@/api/adminApis";
 import QuestionRenderer from "./QuestionRenderer";
 
 interface QuestionsProps {
@@ -15,7 +15,6 @@ export default function Questions({
   topicIndex,
   control,
   errors,
-  clearErrors,
 }: QuestionsProps) {
   const {
     fields: questions,
@@ -23,7 +22,7 @@ export default function Questions({
     remove: removeQuestion,
   } = useFieldArray({
     control,
-    name: `topics.${topicIndex}.questions`,
+    name: `Topics.${topicIndex}.questions`,
   });
   const questionType = Object.entries(EQuestionType)
     .filter(([_key, value]) => typeof value === "number")
@@ -37,20 +36,22 @@ export default function Questions({
         <div key={question.id} className="mt-2 border p-2 rounded-lg">
           <div className="flex justify-between items-center mb-4">
             <h2 className="font-semibold">Question {index + 1}</h2>
-            <Button
-              type="button"
-              onClick={() => {
-                removeQuestion(index);
-              }}
-              className="bg-red-500 text-white p-2 ml-2"
-            >
-              Remove Question
-            </Button>
+            {index > 0 && (
+              <Button
+                type="button"
+                onClick={() => {
+                  removeQuestion(index);
+                }}
+                className="bg-red-500 text-white p-2 ml-2"
+              >
+                Remove Question
+              </Button>
+            )}
           </div>
           <div className="grid grid-cols-6 gap-4">
             <FormController
               label="Question Type"
-              name={`topics.${topicIndex}.questions.${index}.type`}
+              name={`Topics.${topicIndex}.questions.${index}.QuestionType`}
               control={control}
               placeholder="select Question Type"
               errors={errors}
@@ -60,7 +61,7 @@ export default function Questions({
             />
             <FormController
               label="Score"
-              name={`topics.${topicIndex}.questions.${index}.score`}
+              name={`Topics.${topicIndex}.questions.${index}.Score`}
               control={control}
               placeholder="enter question score"
               errors={errors}
@@ -73,7 +74,6 @@ export default function Questions({
                 questionIndex={index}
                 control={control}
                 errors={errors}
-                clearErrors={clearErrors}
               />
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { Control, FieldErrors } from "react-hook-form";
-import { ExamData } from "./AddExamTypes";
-import FormController from "./FormController";
+import { ExamData } from "../AddExamTypes";
+import FormController from "../FormController";
 
 interface TrueFalseTypeProps {
   topicIndex: number;
@@ -20,7 +20,7 @@ export default function TrueFalseType({
       {/* Question Content */}
       <FormController
         label="Question Content"
-        name={`topics.${topicIndex}.questions.${questionIndex}.question_content`}
+        name={`Topics.${topicIndex}.questions.${questionIndex}.ContentQuestion_TF`}
         control={control}
         placeholder="Enter the question text"
         errors={errors}
@@ -31,7 +31,7 @@ export default function TrueFalseType({
       {/* True/False Selection */}
       <FormController
         label="Answer"
-        name={`topics.${topicIndex}.questions.${questionIndex}.answer`}
+        name={`Topics.${topicIndex}.questions.${questionIndex}.Answers_TF`}
         control={control}
         errors={errors}
         type="select"
@@ -45,7 +45,7 @@ export default function TrueFalseType({
       {/* File Upload */}
       <FormController
         label="Upload Image"
-        name={`topics.${topicIndex}.questions.${questionIndex}.file`}
+        name={`Topics.${topicIndex}.questions.${questionIndex}.File_TF`}
         control={control}
         errors={errors}
         type="file"

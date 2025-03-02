@@ -26,7 +26,7 @@ function GeneralInfo({
     <div className="grid grid-cols-2 gap-6 mb-6">
       <FormController
         label="Name (Arabic)"
-        name="name_ar"
+        name="NameAr"
         control={control}
         placeholder="Exam Name Arabic"
         errors={errors}
@@ -34,7 +34,7 @@ function GeneralInfo({
       />
       <FormController
         label="Name (English)"
-        name="name_en"
+        name="NameEn"
         control={control}
         placeholder="Exam Name English"
         errors={errors}
@@ -42,7 +42,7 @@ function GeneralInfo({
       />
       <FormController
         label="Skill"
-        name="skill"
+        name="Skill"
         control={control}
         placeholder="Skill"
         errors={errors}
@@ -51,7 +51,7 @@ function GeneralInfo({
       />
       <FormController
         label="Subject"
-        name="subject"
+        name="SubjectId"
         control={control}
         placeholder="Subject"
         errors={errors}
@@ -61,7 +61,7 @@ function GeneralInfo({
       />
       <FormController
         label="Grade"
-        name="grade"
+        name="GradeId"
         control={control}
         placeholder="Select Grade"
         errors={errors}
@@ -71,7 +71,7 @@ function GeneralInfo({
       />
       <FormController
         label="Level"
-        name="level"
+        name="LevelId"
         control={control}
         placeholder="Level"
         errors={errors}
@@ -84,7 +84,7 @@ function GeneralInfo({
       />
       <FormController
         label="Number of Mandatory Questions"
-        name="mandatoryQuestions"
+        name="NumberOfMandatoryQuestions"
         control={control}
         placeholder="Enter Number"
         errors={errors}
@@ -92,7 +92,7 @@ function GeneralInfo({
       />
       <FormController
         label="Active"
-        name="isActive"
+        name="IsActive"
         control={control}
         placeholder="Active"
         errors={errors}

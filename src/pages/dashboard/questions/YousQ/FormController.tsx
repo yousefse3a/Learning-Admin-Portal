@@ -29,8 +29,6 @@ function FormController({
   const [preview, setPreview] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
 
-
-
   const errorMess = getNestedValue(errors, name);
   return (
     <div className={`${className} mb-4`}>
@@ -41,13 +39,26 @@ function FormController({
         render={({ field }) => {
           switch (type) {
             case "text":
-            case "number":
               return (
                 <input
                   {...field}
                   type={type}
                   className="border rounded p-2 w-full"
                   placeholder={placeholder}
+                />
+              );
+            case "number":
+              return (
+                <input
+                  {...field}
+                  type="number"
+                  className="border rounded p-2 w-full"
+                  placeholder={placeholder}
+                  value={field.value ?? ""}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    field.onChange(value === "" ? null : Number(value)); // ✅ Convert to number
+                  }}
                 />
               );
             case "select":

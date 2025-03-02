@@ -1,33 +1,24 @@
-import { joiResolver } from "@hookform/resolvers/joi";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ExamData } from "./AddExamTypes";
 import GeneralInfo from "./GeneralInfo";
 import Topics from "./Topics";
-import examSchema from "./ValidationSchema";
+import { examSchema } from "./ValidationSchema";
+import { jsonToFormData } from "./util";
 
 function ExamForm() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-    clearErrors,
   } = useForm<ExamData>({
-    resolver: joiResolver(examSchema),
-    defaultValues: {
-      name_ar: "",
-      name_en: "",
-      skill: "",
-      subject: "",
-      grade: "",
-      level: "",
-      mandatoryQuestions: 1,
-      isActive: true,
-      topics: [],
-    },
+    resolver: zodResolver(examSchema),
+    mode: "all",
   });
-  // zcxz
+
   function onSubmit(data: ExamData) {
     console.log("Submitting Exam Data:", JSON.stringify(data, null, 2));
+    console.log("first,jsonToFormData",jsonToFormData(data))
     alert("Exam Submitted Successfully!");
   }
 
@@ -39,10 +30,11 @@ function ExamForm() {
         <GeneralInfo control={control} errors={errors} />
 
         {/* Topics Section (Now handled inside TopicComponent) */}
-        <Topics control={control} errors={errors} clearErrors={clearErrors} />
+        <Topics control={control} errors={errors} />
 
         <button
           type="submit"
+          // onClick={onSubmit}
           className="mt-4 p-2 bg-blue-600 text-white w-full"
         >
           Submit Exam
